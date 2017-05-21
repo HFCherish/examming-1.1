@@ -101,4 +101,13 @@ public class OrdersApiTest extends ApiSupport {
         assertThat(order.get("total_price"), is(saveOrder.getTotalPrice()));
         assertThat(order.get("order_items"), is(notNullValue()));
     }
+
+    @Test
+    public void should_404_when_get_one_not_exists() {
+        Order saveOrder = prepareOrderWithDefaultInfo(user, productRepo);
+
+        Response response = get(getOrdersUrl(user) + "/not_exists_id");
+
+        assertThat(response.getStatus(), is(404));
+    }
 }
