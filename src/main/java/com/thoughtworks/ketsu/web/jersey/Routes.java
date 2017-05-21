@@ -22,4 +22,8 @@ public class Routes {
     public URI orderUri(String uid, String oid) {
         return URI.create(String.format("%susers/%s/orders/%s", baseUri, uid, oid));
     }
+
+    public URI paymentUri(String uid, String oid) {
+        return URI.create(String.format("%susers/%s/orders/%s/payment", baseUri, uid, oid));
+    }
 }

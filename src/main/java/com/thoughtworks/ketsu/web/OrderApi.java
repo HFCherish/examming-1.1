@@ -42,4 +42,12 @@ public class OrderApi {
         order.pay(new Payment(PayType.valueOf(payInfo.get("pay_type").toString()), (double)payInfo.get("amount")));
         return Response.created(URI.create("")).build();
     }
+
+
+    @Path("payment")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Payment getPayment() {
+        return order.getPayment().orElseThrow(() -> new NotFoundException("the order is not payed yet"));
+    }
 }

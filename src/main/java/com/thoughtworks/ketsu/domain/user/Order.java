@@ -7,10 +7,7 @@ import com.thoughtworks.ketsu.util.IdGenerator;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
 import javax.inject.Inject;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by pzzheng on 5/21/17.
@@ -72,5 +69,13 @@ public class Order implements Record{
     PaymentMapper paymentMapper;
     public void pay(Payment payment) {
         paymentMapper.payFor(payment, id.id());
+    }
+
+    public EntityId getUserId() {
+        return userId;
+    }
+
+    public Optional<Payment> getPayment() {
+        return Optional.ofNullable(paymentMapper.findByOrder(id.id()));
     }
 }

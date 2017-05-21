@@ -37,7 +37,7 @@ public class Validators {
                     .filter(error -> error.isPresent())
                     .map(error -> error.get())
                     .collect(Collectors.toList());
-            return errors.size() > 0 ? Optional.of(String.join("\\n", errors)) : Optional.empty();
+            return errors.size() > 0 ? Optional.of(String.join("\n", errors)) : Optional.empty();
         };
     }
 

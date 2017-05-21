@@ -52,4 +52,12 @@
         <result property="address" column="address"/>
         <result property="phone" column="phone"/>
     </resultMap>
+
+    <resultMap id="payment" type="com.thoughtworks.ketsu.domain.user.Payment">
+        <result property="createdAt" column="createdAt" />
+        <result property="payType" column="payType" />
+        <result property="amount" column="amount" />
+        <association property="order" resultMap="order" />
+    </resultMap>
+
 </mapper>

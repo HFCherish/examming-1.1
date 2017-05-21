@@ -6,10 +6,11 @@
         VALUES (#{oid}, #{payment.payType}, #{payment.amount})
     </insert>
 
-    <!--<select id="findById" resultMap="records.user">-->
-        <!--SELECT-->
-          <!--<include refid="columns.user"/>-->
-        <!--FROM users U-->
-        <!--WHERE U.id = #{id}-->
-    <!--</select>-->
+    <select id="findByOrder" resultMap="records.payment">
+        SELECT
+          <include refid="columns.payment"/>
+        FROM payment PM
+        JOIN orders O
+        WHERE PM.order_id = #{oid} AND O.id = #{oid}
+    </select>
 </mapper>

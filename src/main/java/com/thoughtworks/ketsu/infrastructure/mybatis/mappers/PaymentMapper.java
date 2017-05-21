@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface PaymentMapper {
     void payFor(@Param("payment") Payment payment, @Param("oid") String id);
+
+    Payment findByOrder(@Param("oid") String id);
 }

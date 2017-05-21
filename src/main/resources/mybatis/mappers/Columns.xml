@@ -26,4 +26,13 @@
       OI.quantity as quantity,
       OI.amount as amount
     </sql>
+
+    <sql id="payment">
+        PM.amount as amount,
+        PM.pay_type as payType,
+        PM.created_at as createdAt,
+        O.user_id as userId,
+        O.id as orderId
+    </sql>
+
 </mapper>

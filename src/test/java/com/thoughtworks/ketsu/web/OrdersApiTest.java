@@ -2,9 +2,7 @@ package com.thoughtworks.ketsu.web;
 
 import com.thoughtworks.ketsu.domain.products.Product;
 import com.thoughtworks.ketsu.domain.products.ProductRepo;
-import com.thoughtworks.ketsu.domain.user.Order;
-import com.thoughtworks.ketsu.domain.user.User;
-import com.thoughtworks.ketsu.domain.user.UserRepo;
+import com.thoughtworks.ketsu.domain.user.*;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
 import org.junit.Before;
@@ -132,6 +130,19 @@ public class OrdersApiTest extends ApiSupport {
         Response response = post(getOrdersUrl(user) + "/" + saveOrder.getId().id() + "/payment", invalidInput);
 
         assertThat(response.getStatus(), is(400));
+    }
+
+
+    @Test
+    public void should_200_when_get_payment() {
+        Order saveOrder = prepareOrderWithDefaultInfo(user, productRepo);
+        saveOrder.pay(new Payment(PayType.CASH, 100.0));
+
+        Response response = get(getOrdersUrl(user) + "/" + saveOrder.getId().id() + "/payment");
+
+        assertThat(response.getStatus(), is(200));
+        Map<String, Object> payment = response.readEntity(Map.class);
+        assertThat(payment.get("order_uri"), is(notNullValue()));
     }
 
 }
