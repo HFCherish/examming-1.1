@@ -119,4 +119,19 @@ public class OrdersApiTest extends ApiSupport {
 
         assertThat(response.getStatus(), is(201));
     }
+
+
+    @Test
+    public void should_400_when_pay_given_invalid_input() {
+        Order saveOrder = prepareOrderWithDefaultInfo(user, productRepo);
+
+        Map<String, Object> invalidInput = paymentJsonForTest();
+        invalidInput.remove("amount");
+        invalidInput.replace("pay_type", "badtype");
+
+        Response response = post(getOrdersUrl(user) + "/" + saveOrder.getId().id() + "/payment", invalidInput);
+
+        assertThat(response.getStatus(), is(400));
+    }
+
 }

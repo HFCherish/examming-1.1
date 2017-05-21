@@ -10,6 +10,8 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.Map;
 
+import static com.thoughtworks.ketsu.web.validators.Validators.*;
+
 /**
  * Created by pzzheng on 5/21/17.
  */
@@ -31,6 +33,12 @@ public class OrderApi {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response pay(Map<String, Object> payInfo) {
+        validate(payInfo, all(
+                fieldNotEmpty("pay_type"),
+                fieldIsEnum("pay_type", PayType.class),
+                fieldNotEmpty("amount")
+        ));
+
         order.pay(new Payment(PayType.valueOf(payInfo.get("pay_type").toString()), (double)payInfo.get("amount")));
         return Response.created(URI.create("")).build();
     }

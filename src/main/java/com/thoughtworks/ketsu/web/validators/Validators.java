@@ -1,5 +1,7 @@
 package com.thoughtworks.ketsu.web.validators;
 
+import org.apache.commons.lang3.EnumUtils;
+
 import javax.ws.rs.BadRequestException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,6 +23,10 @@ public class Validators {
         return info -> info.getOrDefault(field, "").toString().isEmpty() ? Optional.of(fieldErrorMessage(field, field + " cannot be empty.").toString()) : Optional.empty();
     }
 
+    public static Validator fieldIsEnum(String field, Class enumType) {
+        return info -> !EnumUtils.isValidEnum(enumType, info.get(field).toString()) ? Optional.of(fieldErrorMessage(field, field + " is not valid values. Valid values are: " + EnumUtils.getEnumList(enumType)).toString()) : Optional.empty();
+    }
+
     public static Validator collectionNotEmpty(String field) {
         return info -> ((Collection)info.getOrDefault(field, Collections.EMPTY_LIST)).isEmpty() ? Optional.of(fieldErrorMessage(field, field + " cannot be an empty list").toString()) : Optional.empty();
     }
@@ -31,7 +37,7 @@ public class Validators {
                     .filter(error -> error.isPresent())
                     .map(error -> error.get())
                     .collect(Collectors.toList());
-            return errors.size() > 0 ? Optional.of(String.join("\n", errors)) : Optional.empty();
+            return errors.size() > 0 ? Optional.of(String.join("\\n", errors)) : Optional.empty();
         };
     }
 
