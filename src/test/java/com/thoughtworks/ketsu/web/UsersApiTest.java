@@ -54,10 +54,10 @@ public class UsersApiTest extends ApiSupport {
         assertThat(userMap.get("name"), is(saveUser.getName()));
         assertThat(userMap.get("uri").toString().contains(oneUrl), is(true));
     }
-//
-//    @Test
-//    public void should_404_if_user_not_exist() throws Exception {
-//        final Response response = get("/users/abc");
-//        assertThat(response.getStatus(), is(404));
-//    }
+
+    @Test
+    public void should_404_if_user_not_exist() throws Exception {
+        final Response response = get("/users/abc");
+        assertThat(response.getStatus(), is(404));
+    }
 }
