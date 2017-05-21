@@ -5,10 +5,7 @@
 <mapper namespace="columns">
     <sql id="user">
         U.id as userId,
-        U.name as userName,
-        U.email as userEmail,
-        U.password as userPassword,
-        U.role as userRole
+        U.name as userName
     </sql>
 
     <sql id="product">
