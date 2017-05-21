@@ -1,5 +1,6 @@
 package com.thoughtworks.ketsu.web;
 
+import com.thoughtworks.ketsu.domain.user.User;
 import com.thoughtworks.ketsu.domain.user.UserRepo;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
@@ -10,6 +11,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 
+import static com.thoughtworks.ketsu.support.TestHelper.prepareUserWithDefaultInfo;
 import static com.thoughtworks.ketsu.support.TestHelper.userJsonForTest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -42,18 +44,15 @@ public class UsersApiTest extends ApiSupport {
 
     @Test
     public void should_get_user_by_id() throws Exception {
-        final User user = TestHelper.userForTest("123", "scxu", UserRole.DEV);
-        userRepo.save(user);
+        User saveUser = prepareUserWithDefaultInfo(userRepo);
 
-        final Response response = get("/users/" + user.getUserId().id());
+        String oneUrl = getUsersUrl() + "/" + saveUser.getId().id();
+        final Response response = get(oneUrl);
         assertThat(response.getStatus(), is(200));
         final Map userMap = response.readEntity(Map.class);
-        assertThat(userMap.get("id"), is(user.getUserId().id()));
-        assertThat(userMap.get("name"), is(user.getName()));
-        assertThat(userMap.get("email"), is(user.getEmail()));
-        List urls = (List) userMap.get("links");
-        assertThat(urls.size(), is(1));
-        assertThat(canFindLink(urls, "self", "/users/123"), is(true));
+        assertThat(userMap.get("id"), is(saveUser.getId().id()));
+        assertThat(userMap.get("name"), is(saveUser.getName()));
+        assertThat(userMap.get("uri").toString().contains(oneUrl), is(true));
     }
 //
 //    @Test

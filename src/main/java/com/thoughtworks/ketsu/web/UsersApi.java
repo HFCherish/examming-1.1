@@ -4,9 +4,7 @@ import com.thoughtworks.ketsu.domain.user.User;
 import com.thoughtworks.ketsu.domain.user.UserRepo;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -25,14 +23,14 @@ public class UsersApi {
         validate(userInfo, fieldNotEmpty("name"));
 
         User saveUser = userRepo.save(new User(userInfo.get("name").toString()));
-        return Response.created(routes.userUrl(saveUser)).build();
+        return Response.created(routes.userUrl(saveUser.getId().id())).build();
     }
 
-//    @Path("{userId}")
-//    public UserApi getUser(@PathParam("userId") String userId,
-//                           @Context UserRepo userRepo) {
-//        return userRepo.ofId(new UserId(userId))
-//                .map(UserApi::new)
-//                .orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
-//    }
+    @Path("{userId}")
+    public UserApi getUser(@PathParam("userId") String userId,
+                           @Context UserRepo userRepo) {
+        return userRepo.findById(userId)
+                .map(UserApi::new)
+                .orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
+    }
 }

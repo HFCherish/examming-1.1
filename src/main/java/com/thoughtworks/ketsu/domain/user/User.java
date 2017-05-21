@@ -5,6 +5,7 @@ import com.thoughtworks.ketsu.infrastructure.records.Record;
 import com.thoughtworks.ketsu.util.IdGenerator;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,13 +26,21 @@ public class User implements Record {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public Map<String, Object> toRefJson(Routes routes) {
-        return null;
+        return new HashMap(){{
+            put("id", id.id());
+            put("name", name);
+            put("uri", routes.userUrl(id.id()));
+        }};
     }
 
     @Override
     public Map<String, Object> toJson(Routes routes) {
-        return null;
+        return toRefJson(routes);
     }
 }

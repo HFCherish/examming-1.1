@@ -30,6 +30,6 @@
 # /users/uid
 * get
 	* return 200 when get product
-	* contains right details in response;  --10
+	* contains right details in response;  --10 : 15
 
 	* return 404 when not exists --1

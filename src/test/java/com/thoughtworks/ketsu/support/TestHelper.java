@@ -3,6 +3,7 @@ package com.thoughtworks.ketsu.support;
 import com.thoughtworks.ketsu.domain.products.Product;
 import com.thoughtworks.ketsu.domain.products.ProductRepo;
 import com.thoughtworks.ketsu.domain.user.User;
+import com.thoughtworks.ketsu.domain.user.UserRepo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,9 @@ public class TestHelper {
         return new User("pzzheng");
     }
 
+    public static User prepareUserWithDefaultInfo(UserRepo userRepo) {
+        return userRepo.save(userWithDefaultInfo());
+    }
 
     public static Map<String, Object> productJsonForTest() {
         return new HashMap<String, Object>() {{

@@ -41,6 +41,18 @@ public class Product implements Record{
         }};
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
     @Override
     public Map<String, Object> toJson(Routes routes) {
         return toRefJson(routes);
