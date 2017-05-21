@@ -1,5 +1,6 @@
 package com.thoughtworks.ketsu.web.validators;
 
+import javax.ws.rs.BadRequestException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,12 @@ import static java.util.Arrays.asList;
  * Created by pzzheng on 5/21/17.
  */
 public class Validators {
-
+    public static void validate(Map<String, Object> info, Validator validator) {
+        Optional<String> errors = validator.validate(info);
+        if(errors.isPresent()) {
+            throw new BadRequestException(errors.get());
+        }
+    }
 
     public static Validator fieldNotEmpty(String field) {
         return info -> info.getOrDefault(field, "").toString().isEmpty() ? Optional.of(fieldErrorMessage(field, field + " cannot be empty.").toString()) : Optional.empty();

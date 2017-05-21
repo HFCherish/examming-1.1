@@ -10,10 +10,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import static com.thoughtworks.ketsu.web.validators.Validators.all;
-import static com.thoughtworks.ketsu.web.validators.Validators.fieldNotEmpty;
+import static com.thoughtworks.ketsu.web.validators.Validators.*;
 
 /**
  * Created by pzzheng on 5/21/17.
@@ -28,13 +26,9 @@ public class ProductsApi {
     public Response create(Map<String, Object> prodBody,
                            @Context ProductRepo productRepo,
                            @Context Routes routes) {
-        Optional<String> errors = all(fieldNotEmpty("name"),
+        validate(prodBody, all(fieldNotEmpty("name"),
                 fieldNotEmpty("description"),
-                fieldNotEmpty("price")).validate(prodBody);
-
-        if(errors.isPresent()) {
-            throw new BadRequestException(errors.get());
-        }
+                fieldNotEmpty("price")));
 
         Product saveProd = productRepo.save(new Product(prodBody.get("name").toString(),
                 prodBody.get("description").toString(),

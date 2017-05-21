@@ -31,33 +31,30 @@ public class UsersApiTest extends ApiSupport {
         assertThat(post.getStatus(), is(201));
     }
 
-//    @Test
-//    public void should_400_if_id_not_valid() throws Exception {
-//        Map<String, Object> userInfo = new HashMap<String, Object>() {{
-//            put("email", "scxu@thoughtworks.com");
-//            put("name", "Xu Shanchuan");
-//            put("role", "Dev");
-//        }};
-//
-//        final Response post = post("/users", userInfo);
-//        assertThat(post.getStatus(), is(400));
-//    }
+    @Test
+    public void should_400_if_create_with_invalid_info() throws Exception {
+        Map<String, Object> invalidUser = userJsonForTest();
+        invalidUser.remove("name");
 
-//    @Test
-//    public void should_get_user_by_id() throws Exception {
-//        final User user = TestHelper.userForTest("123", "scxu", UserRole.DEV);
-//        userRepo.save(user);
-//
-//        final Response response = get("/users/" + user.getUserId().id());
-//        assertThat(response.getStatus(), is(200));
-//        final Map userMap = response.readEntity(Map.class);
-//        assertThat(userMap.get("id"), is(user.getUserId().id()));
-//        assertThat(userMap.get("name"), is(user.getName()));
-//        assertThat(userMap.get("email"), is(user.getEmail()));
-//        List urls = (List) userMap.get("links");
-//        assertThat(urls.size(), is(1));
-//        assertThat(canFindLink(urls, "self", "/users/123"), is(true));
-//    }
+        final Response post = post(getUsersUrl(), invalidUser);
+        assertThat(post.getStatus(), is(400));
+    }
+
+    @Test
+    public void should_get_user_by_id() throws Exception {
+        final User user = TestHelper.userForTest("123", "scxu", UserRole.DEV);
+        userRepo.save(user);
+
+        final Response response = get("/users/" + user.getUserId().id());
+        assertThat(response.getStatus(), is(200));
+        final Map userMap = response.readEntity(Map.class);
+        assertThat(userMap.get("id"), is(user.getUserId().id()));
+        assertThat(userMap.get("name"), is(user.getName()));
+        assertThat(userMap.get("email"), is(user.getEmail()));
+        List urls = (List) userMap.get("links");
+        assertThat(urls.size(), is(1));
+        assertThat(canFindLink(urls, "self", "/users/123"), is(true));
+    }
 //
 //    @Test
 //    public void should_404_if_user_not_exist() throws Exception {

@@ -12,6 +12,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 
+import static com.thoughtworks.ketsu.web.validators.Validators.fieldNotEmpty;
+import static com.thoughtworks.ketsu.web.validators.Validators.validate;
+
 @Path("users")
 public class UsersApi {
     @POST
@@ -19,6 +22,8 @@ public class UsersApi {
     public Response createUser(Map<String, Object> userInfo,
                                @Context UserRepo userRepo,
                                @Context Routes routes) {
+        validate(userInfo, fieldNotEmpty("name"));
+
         User saveUser = userRepo.save(new User(userInfo.get("name").toString()));
         return Response.created(routes.userUrl(saveUser)).build();
     }

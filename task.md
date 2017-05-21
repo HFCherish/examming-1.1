@@ -24,7 +24,7 @@
 	* try to save to db and can get that one from db;
 	* contains url in location; --15 : 23
 
-	* return 400 when name empty; --10
+	* return 400 when name empty; --10 : 5
 
 
 # /users/uid

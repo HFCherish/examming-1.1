@@ -19,6 +19,7 @@ public class TestHelper {
         return new User("pzzheng");
     }
 
+
     public static Map<String, Object> productJsonForTest() {
         return new HashMap<String, Object>() {{
             put("name", "shoe");
