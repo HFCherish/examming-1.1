@@ -145,4 +145,13 @@ public class OrdersApiTest extends ApiSupport {
         assertThat(payment.get("order_uri"), is(notNullValue()));
     }
 
+    @Test
+    public void should_404_when_get_payment_if_not_pay() {
+        Order saveOrder = prepareOrderWithDefaultInfo(user, productRepo);
+
+        Response response = get(getOrdersUrl(user) + "/" + saveOrder.getId().id() + "/payment");
+
+        assertThat(response.getStatus(), is(404));
+    }
+
 }
