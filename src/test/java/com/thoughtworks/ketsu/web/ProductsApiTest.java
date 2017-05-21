@@ -62,11 +62,16 @@ public class ProductsApiTest extends ApiSupport {
     @Test
     public void should_get_one_product() {
         Product savedProd = prepareProductWithDefaultInfo(productRepo);
-        Response response = get(getProductsUrl() + "/" + savedProd.getId().id());
+        String one_uri = getProductsUrl() + "/" + savedProd.getId().id();
+        Response response = get(one_uri);
 
         assertThat(response.getStatus(), is(200));
         Map<String, Object> res = response.readEntity(Map.class);
         assertThat(res.get("id"), is(savedProd.getId().id()));
+        assertThat(res.get("name"), is(savedProd.getName()));
+        assertThat(res.get("description"), is(savedProd.getDescription()));
+        assertThat(res.get("price"), is(savedProd.getPrice()));
+        assertThat(res.get("uri").toString().contains(one_uri), is(true));
     }
 
 
