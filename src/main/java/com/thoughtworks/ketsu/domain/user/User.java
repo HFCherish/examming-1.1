@@ -1,7 +1,9 @@
 package com.thoughtworks.ketsu.domain.user;
 
 import com.thoughtworks.ketsu.domain.EntityId;
+import com.thoughtworks.ketsu.domain.products.Product;
 import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.OrderMapper;
+import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.ProductMapper;
 import com.thoughtworks.ketsu.infrastructure.records.Record;
 import com.thoughtworks.ketsu.util.IdGenerator;
 import com.thoughtworks.ketsu.web.jersey.Routes;
@@ -50,8 +52,22 @@ public class User implements Record {
     @Inject
     OrderMapper orderMapper;
     public Order buildOrder(Order order) {
+        checkOrderProductId(order);
         orderMapper.save(order, id.id());
         return orderMapper.findById(order.getId().id());
+    }
+
+    @Inject
+    ProductMapper productMapper;
+    private void checkOrderProductId(Order order) {
+        order.getOrderItems().stream().forEach(
+            orderItem -> {
+                Product product = productMapper.findById(orderItem.getProductId());
+                if(product == null)
+                    throw new IllegalArgumentException("productId " + orderItem.getProductId() + " is invalid");
+            }
+        );
+
     }
 
     public Optional<Order> findOrderById(String oid) {

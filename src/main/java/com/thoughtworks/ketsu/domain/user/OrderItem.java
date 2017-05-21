@@ -10,6 +10,18 @@ public class OrderItem {
 
     private OrderItem() {}
 
+    public String getProductId() {
+        return productId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
     public OrderItem(String productId, int quantity) {
         this.productId = productId;
         this.quantity = quantity;

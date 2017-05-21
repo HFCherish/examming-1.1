@@ -65,4 +65,14 @@ public class OrdersApiTest extends ApiSupport {
 
         assertThat(response.getStatus(), is(400));
     }
+
+
+    @Test
+    public void should_400_when_product_not_exists() {
+        Map<String, Object> withInvalidProductId = orderJsonForTest("invalid_product_id");
+
+        Response response = post(getOrdersUrl(user), withInvalidProductId);
+
+        assertThat(response.getStatus(), is(400));
+    }
 }
