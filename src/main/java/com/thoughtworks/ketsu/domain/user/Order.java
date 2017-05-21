@@ -5,9 +5,11 @@ import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.PaymentMapper;
 import com.thoughtworks.ketsu.infrastructure.records.Record;
 import com.thoughtworks.ketsu.util.IdGenerator;
 import com.thoughtworks.ketsu.web.jersey.Routes;
+import org.joda.time.DateTime;
 
 import javax.inject.Inject;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by pzzheng on 5/21/17.
@@ -18,7 +20,7 @@ public class Order implements Record{
     private EntityId userId;
     private Contact contact;
     private List<OrderItem> orderItems;
-    private Date createdAt;
+    private DateTime createdAt;
 
     private Order() {}
 
@@ -61,7 +63,7 @@ public class Order implements Record{
     @Override
     public Map<String, Object> toJson(Routes routes) {
         Map<String, Object> res = toRefJson(routes);
-        res.put("order_items", orderItems.stream().map(orderItem -> orderItem.toJson(routes)));
+        res.put("order_items", orderItems.stream().map(orderItem -> orderItem.toJson(routes)).collect(Collectors.toList()));
         return res;
     }
 
@@ -73,6 +75,10 @@ public class Order implements Record{
 
     public EntityId getUserId() {
         return userId;
+    }
+
+    public DateTime getCreatedAt() {
+        return createdAt;
     }
 
     public Optional<Payment> getPayment() {

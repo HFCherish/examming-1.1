@@ -2,8 +2,8 @@ package com.thoughtworks.ketsu.domain.user;
 
 import com.thoughtworks.ketsu.infrastructure.records.Record;
 import com.thoughtworks.ketsu.web.jersey.Routes;
+import org.joda.time.DateTime;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +14,7 @@ public class Payment implements Record{
     private PayType payType;
     private double amount;
     private Order order;
-    private Date createdAt;
+    private DateTime createdAt;
 
     private Payment() {}
 
