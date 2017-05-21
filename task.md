@@ -38,9 +38,9 @@
 * post
 	* return 201 when create order
 	* try to save to db and can get that one from db;
-	* contains url in location; --15
+	* contains url in location; --15 : 3h
 
-	* return 400 when incomplete input;  --5
+	* return 400 when incomplete input;  --5 : 9
 	* return 400 when productId invalid; --10
 * get
 	* return 200 when get all -- 5

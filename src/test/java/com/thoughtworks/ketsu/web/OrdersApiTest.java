@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
+import java.util.Map;
+
 import static com.thoughtworks.ketsu.support.TestHelper.orderJsonForTest;
 import static com.thoughtworks.ketsu.support.TestHelper.prepareProductWithDefaultInfo;
 import static com.thoughtworks.ketsu.support.TestHelper.prepareUserWithDefaultInfo;
@@ -52,5 +54,15 @@ public class OrdersApiTest extends ApiSupport {
 
         assertThat(response.getStatus(), is(201));
         assertThat(response.getLocation().toString().matches(".*/[-a-zA-Z\\d]+$"), is(true));
+    }
+
+    @Test
+    public void should_400_when_input_incomplete() {
+        Map<String, Object> incompleteInput = orderJsonForTest(product.getId().id());
+        incompleteInput.remove("name");
+
+        Response response = post(getOrdersUrl(user), incompleteInput);
+
+        assertThat(response.getStatus(), is(400));
     }
 }

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.thoughtworks.ketsu.web.validators.Validators.*;
+
 /**
  * Created by pzzheng on 5/21/17.
  */
@@ -30,6 +32,20 @@ public class OrdersApi {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(Map<String, Object> orderInfo,
                            @Context Routes routes) {
+
+        validate(orderInfo, all(
+                fieldNotEmpty("name"),
+                fieldNotEmpty("address"),
+                fieldNotEmpty("phone"),
+                collectionNotEmpty("order_items")
+        ));
+
+        for(Map orderItem: (List<Map>) orderInfo.get("order_items")) {
+            validate(orderItem, all(
+                    fieldNotEmpty("product_id"),
+                    fieldNotEmpty("quantity")
+            ));
+        }
 
         Contact contact = new Contact(orderInfo.get("name").toString(),
                 orderInfo.get("address").toString(),

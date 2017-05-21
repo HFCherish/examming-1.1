@@ -1,10 +1,7 @@
 package com.thoughtworks.ketsu.web.validators;
 
 import javax.ws.rs.BadRequestException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
@@ -22,6 +19,10 @@ public class Validators {
 
     public static Validator fieldNotEmpty(String field) {
         return info -> info.getOrDefault(field, "").toString().isEmpty() ? Optional.of(fieldErrorMessage(field, field + " cannot be empty.").toString()) : Optional.empty();
+    }
+
+    public static Validator collectionNotEmpty(String field) {
+        return info -> ((Collection)info.getOrDefault(field, Collections.EMPTY_LIST)).isEmpty() ? Optional.of(fieldErrorMessage(field, field + " cannot be an empty list").toString()) : Optional.empty();
     }
 
     public static Validator all(Validator... validators) {
