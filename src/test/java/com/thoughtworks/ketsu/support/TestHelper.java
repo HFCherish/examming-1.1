@@ -39,4 +39,16 @@ public class TestHelper {
     public static Product prepareProductWithDefaultInfo(ProductRepo productRepo) {
         return productRepo.save(productWithDefaultInfo());
     }
+
+    public static Map<String, Object> orderJsonForTest(String prodId) {
+        return new HashMap<String, Object>() {{
+            put("name", "pzzheng");
+            put("address", "beijing");
+            put("phone", "12132");
+            put("order_items", new HashMap(){{
+                put("product_id", prodId);
+                put("quantity", 2);
+            }});
+        }};
+    }
 }
