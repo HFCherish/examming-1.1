@@ -16,4 +16,17 @@
         <result property="password" column="userPassword"/>
         <association property="userId" resultMap="userId"/>
     </resultMap>
+
+    <resultMap id="prodId" type="com.thoughtworks.ketsu.domain.EntityId">
+        <constructor>
+            <idArg column="prodId" javaType="string"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="product" type="com.thoughtworks.ketsu.domain.products.Product">
+        <result property="name" column="prodName"/>
+        <result property="description" column="prodDesc"/>
+        <result property="price" column="prodPrice"/>
+        <association property="id" resultMap="prodId"/>
+    </resultMap>
 </mapper>

@@ -1,5 +1,7 @@
 package com.thoughtworks.ketsu.support;
 
+import com.thoughtworks.ketsu.domain.products.Product;
+import com.thoughtworks.ketsu.domain.products.ProductRepo;
 import com.thoughtworks.ketsu.domain.user.User;
 import com.thoughtworks.ketsu.domain.user.UserId;
 import com.thoughtworks.ketsu.domain.user.UserRepository;
@@ -10,6 +12,8 @@ import java.util.Map;
 
 public class TestHelper {
     private static int auto_increment_key = 1;
+    private static Product defaultProduct;
+
     public static Map<String, Object> deployment(String appName, String releaseId) {
         return new HashMap<String, Object>() {{
             put("app", String.format("http://service-api.tw.com/apps/%s", appName));
@@ -49,5 +53,21 @@ public class TestHelper {
             put("id", user.getUserId().id());
             put("role", user.getRole());
         }};
+    }
+
+    public static Map<String, Object> productJsonForTest() {
+        return new HashMap<String, Object>() {{
+            put("name", "shoe");
+            put("description", "shoe desc");
+            put("price", 1.2);
+        }};
+    }
+
+    public static Product productWithDefaultInfo() {
+        return new Product("shoe", "shoe desc", 1.2);
+    }
+
+    public static Product prepareProductWithDefaultInfo(ProductRepo productRepo) {
+        return productRepo.save(productWithDefaultInfo());
     }
 }
