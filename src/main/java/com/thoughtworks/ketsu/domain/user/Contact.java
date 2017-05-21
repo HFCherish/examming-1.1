@@ -8,6 +8,18 @@ public class Contact {
     private String address;
     private String phone;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
     private Contact(){}
 
     public Contact(String name, String address, String phone) {

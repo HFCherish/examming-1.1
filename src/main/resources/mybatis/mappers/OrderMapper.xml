@@ -21,9 +21,11 @@
         WHERE O.id = #{oid}
     </select>
 
-    <!--<select id="findAll" resultMap="records.order">-->
-    <!--SELECT-->
-    <!--<include refid="columns.order"/>-->
-    <!--FROM orders P-->
-    <!--</select>-->
+    <select id="findAllOf" resultMap="records.order">
+        SELECT
+        <include refid="columns.order"/>
+        FROM orders O
+        LEFT JOIN order_items OI on OI.order_id = O.id
+        WHERE O.user_id = #{userId}
+    </select>
 </mapper>

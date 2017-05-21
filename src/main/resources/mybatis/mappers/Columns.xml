@@ -17,9 +17,11 @@
 
     <sql id="order">
       O.id as orderId,
+      O.user_id as userId,
       O.name as name,
       O.address as address,
       O.phone as phone,
+      O.created_at as createdAt,
       OI.product_id as productId,
       OI.quantity as quantity,
       OI.amount as amount

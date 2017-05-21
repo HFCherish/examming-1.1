@@ -26,4 +26,8 @@ public class OrderItem {
         this.productId = productId;
         this.quantity = quantity;
     }
+
+    public double calPrice() {
+        return amount *  quantity;
+    }
 }

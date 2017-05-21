@@ -34,7 +34,9 @@
     </resultMap>
 
     <resultMap id="order" type="com.thoughtworks.ketsu.domain.user.Order">
+        <result property="createdAt" column="createdAt" />
         <association property="id" resultMap="orderId" />
+        <association property="userId" resultMap="userId" />
         <association property="contact" resultMap="contact" />
         <collection property="orderItems" resultMap="orderItem" ofType="com.thoughtworks.ketsu.domain.user.OrderItem"/>
     </resultMap>

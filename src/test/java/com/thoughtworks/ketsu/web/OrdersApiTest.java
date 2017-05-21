@@ -13,11 +13,12 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
-
+import java.util.List;
 import java.util.Map;
 
 import static com.thoughtworks.ketsu.support.TestHelper.*;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -82,5 +83,10 @@ public class OrdersApiTest extends ApiSupport {
         Response response = get(getOrdersUrl(user));
 
         assertThat(response.getStatus(), is(200));
+        List<Map> orders = response.readEntity(List.class);
+        assertThat(orders.size(), is(1));
+        Map<String, Object> order = orders.get(0);
+        assertThat(order.get("total_price"), is(saveOrder.getTotalPrice()));
+        assertThat(order.get("order_items"), is(nullValue()));
     }
 }

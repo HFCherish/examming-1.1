@@ -5,6 +5,8 @@ import com.thoughtworks.ketsu.infrastructure.records.Record;
 import com.thoughtworks.ketsu.util.IdGenerator;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +16,10 @@ import java.util.Map;
 public class Order implements Record{
 
     private EntityId id;
+    private EntityId userId;
     private Contact contact;
     private List<OrderItem> orderItems;
+    private Date createdAt;
 
     private Order() {}
 
@@ -39,11 +43,24 @@ public class Order implements Record{
 
     @Override
     public Map<String, Object> toRefJson(Routes routes) {
-        return null;
+        return new HashMap() {{
+            put("name", contact.getName());
+            put("phone", contact.getPhone());
+            put("address", contact.getAddress());
+            put("created_at", createdAt);
+            put("total_price", getTotalPrice());
+            put("uri", routes.orderUri(userId.id(), id.id()));
+        }};
+    }
+
+    public double getTotalPrice() {
+        return orderItems.stream()
+                .map(orderItem -> orderItem.calPrice())
+                .reduce(0.0, (a,b) -> a + b);
     }
 
     @Override
     public Map<String, Object> toJson(Routes routes) {
-        return null;
+        return toRefJson(routes);
     }
 }

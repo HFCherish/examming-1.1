@@ -10,6 +10,7 @@ import com.thoughtworks.ketsu.web.jersey.Routes;
 
 import javax.inject.Inject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -72,5 +73,9 @@ public class User implements Record {
 
     public Optional<Order> findOrderById(String oid) {
         return Optional.ofNullable(orderMapper.findById(oid));
+    }
+
+    public List<Order> getOrders() {
+        return orderMapper.findAllOf(id.id());
     }
 }
