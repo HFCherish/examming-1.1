@@ -26,4 +26,28 @@
         <result property="price" column="prodPrice"/>
         <association property="id" resultMap="prodId"/>
     </resultMap>
+
+    <resultMap id="orderId" type="com.thoughtworks.ketsu.domain.EntityId">
+        <constructor>
+            <idArg column="orderId" javaType="string"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="order" type="com.thoughtworks.ketsu.domain.user.Order">
+        <association property="id" resultMap="orderId" />
+        <association property="contact" resultMap="contact" />
+        <collection property="orderItems" resultMap="orderItem" ofType="com.thoughtworks.ketsu.domain.user.OrderItem"/>
+    </resultMap>
+
+    <resultMap id="orderItem" type="com.thoughtworks.ketsu.domain.user.OrderItem">
+        <result property="productId" column="productId"/>
+        <result property="quantity" column="quantity"/>
+        <result property="amount" column="amount"/>
+    </resultMap>
+
+    <resultMap id="contact" type="com.thoughtworks.ketsu.domain.user.Contact">
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
 </mapper>

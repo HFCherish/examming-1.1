@@ -51,7 +51,6 @@ public class OrdersApiTest extends ApiSupport {
         Response response = post(getOrdersUrl(user), orderJsonForTest(product.getId().id()));
 
         assertThat(response.getStatus(), is(201));
-//        assertThat();
-
+        assertThat(response.getLocation().toString().matches(".*/[-a-zA-Z\\d]+$"), is(true));
     }
 }

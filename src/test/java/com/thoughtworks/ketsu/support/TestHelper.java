@@ -2,11 +2,12 @@ package com.thoughtworks.ketsu.support;
 
 import com.thoughtworks.ketsu.domain.products.Product;
 import com.thoughtworks.ketsu.domain.products.ProductRepo;
-import com.thoughtworks.ketsu.domain.user.User;
-import com.thoughtworks.ketsu.domain.user.UserRepo;
+import com.thoughtworks.ketsu.domain.user.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TestHelper {
 
@@ -45,10 +46,19 @@ public class TestHelper {
             put("name", "pzzheng");
             put("address", "beijing");
             put("phone", "12132");
-            put("order_items", new HashMap(){{
-                put("product_id", prodId);
-                put("quantity", 2);
-            }});
+            put("order_items", Arrays.asList(
+                    new HashMap(){{
+                        put("product_id", prodId);
+                        put("quantity", 2);
+                    }}
+            ));
         }};
+    }
+
+    public static Order orderWithDefaultInfo(Product... products) {
+        return new Order(new Contact("pzzheng", "beijing", "12132"),
+                Arrays.asList(products).stream().map(
+                        product -> new OrderItem(product.getId().id(), 1)
+                ).collect(Collectors.toList()));
     }
 }
