@@ -1,10 +1,12 @@
 package com.thoughtworks.ketsu.domain.user;
 
 import com.thoughtworks.ketsu.domain.EntityId;
+import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.PaymentMapper;
 import com.thoughtworks.ketsu.infrastructure.records.Record;
 import com.thoughtworks.ketsu.util.IdGenerator;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
+import javax.inject.Inject;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -64,5 +66,11 @@ public class Order implements Record{
         Map<String, Object> res = toRefJson(routes);
         res.put("order_items", orderItems.stream().map(orderItem -> orderItem.toJson(routes)));
         return res;
+    }
+
+    @Inject
+    PaymentMapper paymentMapper;
+    public void pay(Payment payment) {
+        paymentMapper.payFor(payment, id.id());
     }
 }

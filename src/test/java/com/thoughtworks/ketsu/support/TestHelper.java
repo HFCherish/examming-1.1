@@ -67,4 +67,12 @@ public class TestHelper {
     public static Order prepareOrderWithDefaultInfo(User user, ProductRepo productRepo) {
         return user.buildOrder(orderWithDefaultInfo(prepareProductWithDefaultInfo(productRepo), prepareProductWithDefaultInfo(productRepo)));
     }
+
+
+    public static Map<String, Object> paymentJsonForTest() {
+        return new HashMap<String, Object>() {{
+            put("pay_type", PayType.CASH);
+            put("amount", 100.0);
+        }};
+    }
 }

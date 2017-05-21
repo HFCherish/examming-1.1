@@ -65,9 +65,10 @@ public class OrdersApi {
 
 
     @Path("{oid}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Order getOne(@PathParam("oid") String oid) {
-        return user.getOrder(oid).orElseThrow(() -> new NotFoundException("order " + oid + " not exists"));
+    public OrderApi getOne(@PathParam("oid") String oid) {
+        return user.getOrder(oid)
+                .map(OrderApi::new)
+                .orElseThrow(() -> new NotFoundException("order " + oid + " not exists"));
     }
+
 }

@@ -50,6 +50,17 @@
 # /users/uid/orders/oid
 * get
 	* return 200 when get oid
-	* contains right detail in response;  --15
+	* contains right detail in response;  --15: 15
 
-	* return 404 when not exists --5
+	* return 404 when not exists --5:3
+
+
+# /users/uid/orders/oid/payment
+* post
+	* return 201 when create payment
+	* try to save to db and can get that one from db; --15
+
+	* return 400 when incomplete input;  --5
+* get
+	* return 200 when get -- 5
+	* try to get from db and can get all details(without order_item) -- 10

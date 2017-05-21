@@ -110,4 +110,13 @@ public class OrdersApiTest extends ApiSupport {
 
         assertThat(response.getStatus(), is(404));
     }
+
+    @Test
+    public void should_201_when_pay() {
+        Order saveOrder = prepareOrderWithDefaultInfo(user, productRepo);
+
+        Response response = post(getOrdersUrl(user) + "/" + saveOrder.getId().id() + "/payment", paymentJsonForTest());
+
+        assertThat(response.getStatus(), is(201));
+    }
 }
