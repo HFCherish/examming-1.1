@@ -71,11 +71,12 @@ public class User implements Record {
 
     }
 
-    public Optional<Order> findOrderById(String oid) {
+    public Optional<Order> getOrder(String oid) {
         return Optional.ofNullable(orderMapper.findById(oid));
     }
 
     public List<Order> getOrders() {
         return orderMapper.findAllOf(id.id());
     }
+
 }

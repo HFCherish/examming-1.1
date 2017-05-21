@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.thoughtworks.ketsu.support.TestHelper.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -88,5 +87,18 @@ public class OrdersApiTest extends ApiSupport {
         Map<String, Object> order = orders.get(0);
         assertThat(order.get("total_price"), is(saveOrder.getTotalPrice()));
         assertThat(order.get("order_items"), is(nullValue()));
+    }
+
+
+    @Test
+    public void should_200_when_get_one() {
+        Order saveOrder = prepareOrderWithDefaultInfo(user, productRepo);
+
+        Response response = get(getOrdersUrl(user) + "/" + saveOrder.getId().id());
+
+        assertThat(response.getStatus(), is(200));
+        Map<String, Object> order = response.readEntity(Map.class);
+        assertThat(order.get("total_price"), is(saveOrder.getTotalPrice()));
+        assertThat(order.get("order_items"), is(notNullValue()));
     }
 }

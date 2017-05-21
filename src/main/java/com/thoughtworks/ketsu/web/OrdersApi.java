@@ -6,14 +6,10 @@ import com.thoughtworks.ketsu.domain.user.OrderItem;
 import com.thoughtworks.ketsu.domain.user.User;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,5 +61,13 @@ public class OrdersApi {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Order> getAll() {
         return user.getOrders();
+    }
+
+
+    @Path("{oid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Order getOne(@PathParam("oid") String oid) {
+        return user.getOrder(oid).orElseThrow(() -> new NotFoundException("order " + oid + " not exists"));
     }
 }

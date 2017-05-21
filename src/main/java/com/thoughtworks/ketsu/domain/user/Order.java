@@ -61,6 +61,8 @@ public class Order implements Record{
 
     @Override
     public Map<String, Object> toJson(Routes routes) {
-        return toRefJson(routes);
+        Map<String, Object> res = toRefJson(routes);
+        res.put("order_items", orderItems.stream().map(orderItem -> orderItem.toJson(routes)));
+        return res;
     }
 }

@@ -40,7 +40,7 @@ public class UserTest {
         Order saveOrder = user.buildOrder(orderWithDefaultInfo(prepareProductWithDefaultInfo(productRepo),
                 prepareProductWithDefaultInfo(productRepo)));
 
-        Optional<Order> orderById = user.findOrderById(saveOrder.getId().id());
+        Optional<Order> orderById = user.getOrder(saveOrder.getId().id());
 
         assertThat(orderById.isPresent(), is(true));
         assertThat(orderById.get().getId(), is(saveOrder.getId()));
