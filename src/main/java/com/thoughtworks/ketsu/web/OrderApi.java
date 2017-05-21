@@ -39,7 +39,7 @@ public class OrderApi {
                 fieldNotEmpty("amount")
         ));
 
-        order.pay(new Payment(PayType.valueOf(payInfo.get("pay_type").toString()), (double)payInfo.get("amount")));
+        order.pay(new Payment(PayType.valueOf(payInfo.get("pay_type").toString()), Double.valueOf(payInfo.get("amount").toString())));
         return Response.created(URI.create("")).build();
     }
 

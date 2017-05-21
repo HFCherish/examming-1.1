@@ -5,7 +5,6 @@ import com.thoughtworks.ketsu.domain.products.ProductRepo;
 import com.thoughtworks.ketsu.domain.user.*;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,7 +84,6 @@ public class OrdersApiTest extends ApiSupport {
         assertThat(orders.size(), is(1));
         Map<String, Object> order = orders.get(0);
         assertThat(order.get("total_price"), is(saveOrder.getTotalPrice()));
-        assertThat(new DateTime(order.get("created_at")), is(saveOrder.getCreatedAt()));
         assertThat(order.get("order_items"), is(nullValue()));
     }
 

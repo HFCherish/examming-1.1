@@ -19,7 +19,7 @@ public class Order implements Record{
     private EntityId id;
     private EntityId userId;
     private Contact contact;
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new ArrayList<>();
     private DateTime createdAt;
 
     private Order() {}
@@ -48,7 +48,7 @@ public class Order implements Record{
             put("name", contact.getName());
             put("phone", contact.getPhone());
             put("address", contact.getAddress());
-            put("created_at", createdAt);
+            put("created_at", createdAt.getMillis());
             put("total_price", getTotalPrice());
             put("uri", routes.orderUri(userId.id(), id.id()));
         }};

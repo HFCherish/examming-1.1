@@ -28,7 +28,7 @@ public class Payment implements Record{
         return new HashMap() {{
             put("amount", amount);
             put("pay_type", payType.toString());
-            put("created_at", createdAt);
+            put("created_at", createdAt.getMillis());
             put("order_uri", routes.orderUri(order.getUserId().id(), order.getId().id()));
             put("uri", routes.paymentUri(order.getUserId().id(), order.getId().id()));
         }};

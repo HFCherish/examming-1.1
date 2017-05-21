@@ -72,7 +72,7 @@ public class TestHelper {
     public static Map<String, Object> paymentJsonForTest() {
         return new HashMap<String, Object>() {{
             put("pay_type", PayType.CASH);
-            put("amount", 100.0);
+            put("amount", 100);
         }};
     }
 }

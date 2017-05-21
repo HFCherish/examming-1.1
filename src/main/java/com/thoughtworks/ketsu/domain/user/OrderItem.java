@@ -40,6 +40,7 @@ public class OrderItem implements Record{
     @Override
     public Map<String, Object> toRefJson(Routes routes) {
         return new HashMap() {{
+            put("uri", routes.productUrl(productId));
             put("amount", amount);
             put("quantity", quantity);
             put("product_id", productId);
