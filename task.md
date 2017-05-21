@@ -41,7 +41,7 @@
 	* contains url in location; --15 : 3h
 
 	* return 400 when incomplete input;  --5 : 9
-	* return 400 when productId invalid; --10
+	* return 400 when productId invalid; --10 : 15
 * get
 	* return 200 when get all -- 5
 	* try to get from db and can get all details(without order_item) -- 10: 12

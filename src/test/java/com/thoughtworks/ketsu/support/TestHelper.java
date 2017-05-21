@@ -25,6 +25,7 @@ public class TestHelper {
         return userRepo.save(userWithDefaultInfo());
     }
 
+
     public static Map<String, Object> productJsonForTest() {
         return new HashMap<String, Object>() {{
             put("name", "shoe");
@@ -40,6 +41,7 @@ public class TestHelper {
     public static Product prepareProductWithDefaultInfo(ProductRepo productRepo) {
         return productRepo.save(productWithDefaultInfo());
     }
+
 
     public static Map<String, Object> orderJsonForTest(String prodId) {
         return new HashMap<String, Object>() {{
@@ -60,5 +62,9 @@ public class TestHelper {
                 Arrays.asList(products).stream().map(
                         product -> new OrderItem(product.getId().id(), 1)
                 ).collect(Collectors.toList()));
+    }
+
+    public static Order prepareOrderWithDefaultInfo(User user, ProductRepo productRepo) {
+        return user.buildOrder(orderWithDefaultInfo(prepareProductWithDefaultInfo(productRepo), prepareProductWithDefaultInfo(productRepo)));
     }
 }

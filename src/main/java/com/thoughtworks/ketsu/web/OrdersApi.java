@@ -7,10 +7,13 @@ import com.thoughtworks.ketsu.domain.user.User;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -56,5 +59,11 @@ public class OrdersApi {
                                 (int) order_item.get("quantity")))
                         .collect(Collectors.toList())));
         return Response.created(routes.orderUri(user.getId().id(), order.getId().id())).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Order> getAll() {
+        return new ArrayList<>();
     }
 }
