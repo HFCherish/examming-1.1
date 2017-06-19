@@ -5,8 +5,8 @@
         INSERT INTO orders (id, name, address, phone, user_id)
         VALUES (#{order.id.id}, #{order.contact.name}, #{order.contact.address}, #{order.contact.phone}, #{userId});
 
+        INSERT INTO order_items (order_id, product_id, quantity, amount)
         <foreach collection="order.orderItems" item="item">
-            INSERT INTO order_items (order_id, product_id, quantity, amount)
             SELECT #{order.id.id}, id, #{item.quantity}, price
             FROM products
             WHERE id = #{item.productId};
